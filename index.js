@@ -1,6 +1,15 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.get("/getMediaInfo", (req, res) => {
+  res.type("text/plain");
+  res.send("get MediaInfsss");
+  console.log("");
+});
+
+app.use(express.static(__dirname + "SDCard"));
+
 // custom 404 page
 app.use((req, res) => {
   res.type("text/plain");
