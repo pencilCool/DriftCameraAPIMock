@@ -1,8 +1,11 @@
 const express = require("express");
+const axios = require("axios");
 const app = express();
 const port = process.env.PORT || 3000;
+console.log(__dirname);
+app.use(express.static(__dirname + "/SDCard"));
 
-app.get("/cgi-bin/foream_mediainfo?mediaInfo", (req, res) => {
+app.get("/cgi-bin/foream_mediainfo", (req, res) => {
   res.json({
     files: [
       {
@@ -45,8 +48,6 @@ app.get("/cgi-bin/foream_mediainfo?mediaInfo", (req, res) => {
   });
 });
 
-app.use(express.static(__dirname + "SDCard"));
-
 // custom 404 page
 app.use((req, res) => {
   res.type("text/plain");
@@ -66,3 +67,17 @@ app.listen(port, () =>
       `press Ctrl-C to terminate.`
   )
 );
+
+axios
+  .get("http://localhost:3000/cgi-bin/foream_mediainfo")
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
